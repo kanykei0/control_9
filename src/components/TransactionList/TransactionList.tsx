@@ -11,6 +11,7 @@ import {
 } from "../../store/Transaction/TransactionThunk";
 import TransactionItem from "./TransactionItem";
 import { Spinner } from "react-bootstrap";
+import { fetchOneCategory } from "../../store/Categories/CategoriesThunk";
 
 const TransactionList = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ const TransactionList = () => {
   const deleteLoading = useAppSelector(selectDeleteTransactionLoading);
 
   useEffect(() => {
-    dispatch(fetchAllTransactions());
+    void dispatch(fetchAllTransactions());
   }, [dispatch]);
 
   const removeTransaction = async (id: string) => {

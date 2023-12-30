@@ -89,6 +89,9 @@ export const CategorySlice = createSlice({
         state.category = category;
       }
     );
+    builder.addCase(fetchOneCategory.rejected, (state) => {
+      state.oneCategoryLoading = false;
+    });
     builder.addCase(getCategoriesByType.pending, (state) => {
       state.typedCategoriesLoading = true;
     });

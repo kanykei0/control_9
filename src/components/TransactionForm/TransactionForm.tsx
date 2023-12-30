@@ -106,7 +106,7 @@ const TransactionForm: React.FC<Props> = ({
           Amount
         </label>
         <input
-          type="text"
+          type="number"
           className="form-control"
           id="amount"
           name="amount"

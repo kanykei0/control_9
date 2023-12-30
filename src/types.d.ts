@@ -3,6 +3,7 @@ export interface TransactionProps {
   type: string;
   category: string;
   amount: number;
+  createdAt: string;
 }
 
 export type TransactionApi = Omit<TransactionProps, "id">;
@@ -21,6 +22,11 @@ export interface TransactionConf {
 
 export interface TransactionList {
   [id: string]: TransactionApi;
+}
+
+export interface UpdateTransaction {
+  id: string;
+  transaction: TransactionApi;
 }
 
 export interface CategoryProps {
