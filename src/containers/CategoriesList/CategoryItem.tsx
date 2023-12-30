@@ -19,7 +19,10 @@ const CategoryItem: React.FC<Props> = ({
       <div className="card-body d-flex align-items-center">
         <h6 className="m-0 me-5 ">{category.name}</h6>
         <p className={`m-0 me-5 ${category.type}`}>{category.type}</p>
-        <Link to="/edit-category/:id" className="btn btn-warning me-5">
+        <Link
+          to={`/edit-category/${category.id}`}
+          className="btn btn-warning me-5"
+        >
           edit
         </Link>
         <button

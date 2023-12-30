@@ -24,3 +24,8 @@ export type CategoryApi = Omit<CategoryProps, "id">;
 export interface CategoriesList {
   [id: string]: CategoryApi;
 }
+
+export interface UpdateCategory {
+  id: string;
+  category: CategoryApi;
+}
