@@ -15,10 +15,10 @@ const TransactionItem: React.FC<Props> = ({
   onDelete,
 }) => {
   return (
-    <div className="card shadow col-5 mx-auto mb-3">
+    <div className="card shadow mx-auto mt-3">
       <div className="card-body d-flex align-items-center">
         <h6 className="m-0 me-5 "></h6>
-        <p className="m-0 me-5">{transaction.type}</p>
+        <p className="m-0 me-5">{transaction.amount}</p>
         <Link
           to={`/edit-transaction/${transaction.id}`}
           className="btn btn-warning me-5"

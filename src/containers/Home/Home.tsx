@@ -1,7 +1,9 @@
+import TransactionList from "../../components/TransactionList/TransactionList";
+
 const Home = () => {
   return (
-    <div className="container">
-      <div>Home</div>
+    <div className="container col-9">
+      <TransactionList />
     </div>
   );
 };

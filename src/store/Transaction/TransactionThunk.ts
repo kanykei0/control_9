@@ -26,9 +26,9 @@ export const fetchAllTransactions = createAsyncThunk<
 
   if (result) {
     newTransaction = Object.keys(result).map((key) => {
-      const categories = result[key];
+      const transactions = result[key];
       return {
-        ...categories,
+        ...transactions,
         id: key,
       };
     });
@@ -36,3 +36,10 @@ export const fetchAllTransactions = createAsyncThunk<
 
   return newTransaction;
 });
+
+export const deleteTransaction = createAsyncThunk<void, string>(
+  "transaction/delete",
+  async (id: string) => {
+    await axiosApi.delete(`transactions/${id}.json`);
+  }
+);
