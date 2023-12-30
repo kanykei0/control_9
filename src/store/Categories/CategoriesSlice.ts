@@ -5,6 +5,7 @@ import {
   editCategory,
   fetchAllCategories,
   fetchOneCategory,
+  getCategoriesByType,
 } from "./CategoriesThunk";
 import { RootState } from "../../app/store";
 import { CategoryApi, CategoryProps } from "../../types";
@@ -12,20 +13,24 @@ import { CategoryApi, CategoryProps } from "../../types";
 interface CategoryState {
   category: CategoryApi | null;
   categories: CategoryProps[];
+  categoriesTyped: CategoryProps[];
   createCategoryLoading: boolean;
   fetchCatgoriesLoading: boolean;
   editCategoryLoading: boolean;
   oneCategoryLoading: boolean;
+  typedCategoriesLoading: boolean;
   deleteCategoryLoading: false | string;
 }
 
 const initialState: CategoryState = {
   category: null,
   categories: [],
+  categoriesTyped: [],
   createCategoryLoading: false,
   fetchCatgoriesLoading: false,
   editCategoryLoading: false,
   oneCategoryLoading: false,
+  typedCategoriesLoading: false,
   deleteCategoryLoading: false,
 };
 
@@ -84,14 +89,26 @@ export const CategorySlice = createSlice({
         state.category = category;
       }
     );
-    builder.addCase(fetchOneCategory.rejected, (state) => {
-      state.oneCategoryLoading = false;
+    builder.addCase(getCategoriesByType.pending, (state) => {
+      state.typedCategoriesLoading = true;
+    });
+    builder.addCase(
+      getCategoriesByType.fulfilled,
+      (state, { payload: categoriesTyped }) => {
+        state.typedCategoriesLoading = false;
+        state.categoriesTyped = categoriesTyped;
+      }
+    );
+    builder.addCase(getCategoriesByType.rejected, (state) => {
+      state.typedCategoriesLoading = false;
     });
   },
 });
 
 export const CategoryReducer = CategorySlice.reducer;
 
+export const selectTypedCategories = (state: RootState) =>
+  state.category.categoriesTyped;
 export const selectCategory = (state: RootState) => state.category.category;
 export const slelectAllCategories = (state: RootState) =>
   state.category.categories;

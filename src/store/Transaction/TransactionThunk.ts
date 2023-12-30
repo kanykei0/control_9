@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TransactionApi } from "../../types";
+import { TransactionConf } from "../../types";
 import axiosApi from "../../axiosApi";
 
-export const createTransaction = createAsyncThunk<void, TransactionApi>(
+export const createTransaction = createAsyncThunk<void, TransactionConf>(
   "transaction/create",
   async (transaction) => {
     await axiosApi.post("transactions.json", transaction);

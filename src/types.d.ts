@@ -13,6 +13,12 @@ export interface TransactionMutation {
   amount: string;
 }
 
+export interface TransactionConf {
+  category: string;
+  amount: number;
+  createdAt: string;
+}
+
 export interface CategoryProps {
   id: string;
   name: string;

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { TransactionApi, TransactionMutation } from "../../types";
+import React, { useEffect, useState } from "react";
+import { TransactionConf, TransactionMutation } from "../../types";
 import ButtonSpinner from "../Spinners/ButtonSpinner";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { getCategoriesByType } from "../../store/Categories/CategoriesThunk";
+import { selectTypedCategories } from "../../store/Categories/CategoriesSlice";
 
 const initialState: TransactionMutation = {
   type: "",
@@ -10,7 +13,7 @@ const initialState: TransactionMutation = {
 };
 
 interface Props {
-  onSubmit: (transaction: TransactionApi) => void;
+  onSubmit: (transaction: TransactionConf) => void;
   existingTransaction?: TransactionMutation;
   isEdit?: boolean;
   isLoading?: boolean;
@@ -22,9 +25,20 @@ const TransactionForm: React.FC<Props> = ({
   isEdit = false,
   isLoading = false,
 }) => {
+  const dispatch = useAppDispatch();
+  const typedCategories = useAppSelector(selectTypedCategories);
   const [field, setField] = useState<TransactionMutation>(existingTransaction);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const typesData = async () => {
+      await dispatch(getCategoriesByType(field.type));
+    };
+    void typesData();
+  }, [dispatch, field.type]);
+
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setField((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -35,12 +49,17 @@ const TransactionForm: React.FC<Props> = ({
     e.preventDefault();
 
     if (isLoading) return;
+    const now = new Date();
+
+    const createdAt = now.toISOString();
 
     onSubmit({
-      ...field,
+      category: field.category,
       amount: parseFloat(field.amount),
+      createdAt: createdAt,
     });
   };
+
   return (
     <form onSubmit={onFormSubmit} className="col-6 shadow mx-auto p-4 mt-5">
       <h4>{isEdit ? "Edit transaction" : "Add new transaction"}</h4>
@@ -48,20 +67,38 @@ const TransactionForm: React.FC<Props> = ({
         <label htmlFor="type" className="form-label">
           Type
         </label>
-        <select className="form-select" id="type" required>
+        <select
+          className="form-select"
+          value={field.type}
+          name="type"
+          id="type"
+          onChange={onChange}
+          required
+        >
           <option value="">Choose type</option>
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
         </select>
       </div>
       <div className="form-group mb-4">
         <label htmlFor="category" className="form-label">
           Category
         </label>
-        <select className="form-select" id="category" required>
+        <select
+          className="form-select"
+          id="category"
+          value={field.category}
+          name="category"
+          onChange={onChange}
+          required
+        >
           <option value="">Choose category</option>
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
+          {typedCategories &&
+            typedCategories.map((category, index) => (
+              <option key={index} value={category.id}>
+                {category.name}
+              </option>
+            ))}
         </select>
       </div>
       <div className="form-group mb-4">

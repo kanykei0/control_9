@@ -67,3 +67,44 @@ export const fetchOneCategory = createAsyncThunk<CategoryApi, string>(
     return category;
   }
 );
+
+// export const getCategoriesByType = createAsyncThunk<CategoriesList, string>(
+//   "category/getCategories",
+//   async (type: string) => {
+//     const response = await axiosApi.get(
+//       `categories.json?orderBy="type"&equalTo="${type}"`
+//     );
+//     const result = response.data;
+
+//     if (result === null) {
+//       throw new Error("Not Found");
+//     }
+//     console.log(result);
+//     return result;
+//   }
+// );
+
+export const getCategoriesByType = createAsyncThunk<CategoryProps[], string>(
+  "category/getCategories",
+  async (type: string) => {
+    const response = await axiosApi.get(
+      `categories.json?orderBy="type"&equalTo="${type}"`
+    );
+    const result = response.data;
+    console.log(result);
+
+    let newCategory: CategoryProps[] = [];
+
+    if (result) {
+      newCategory = Object.keys(result).map((key) => {
+        const categories = result[key];
+        return {
+          ...categories,
+          id: key,
+        };
+      });
+    }
+
+    return newCategory;
+  }
+);
