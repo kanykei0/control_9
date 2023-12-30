@@ -19,6 +19,10 @@ export interface TransactionConf {
   createdAt: string;
 }
 
+export interface TransactionList {
+  [id: string]: TransactionApi;
+}
+
 export interface CategoryProps {
   id: string;
   name: string;
