@@ -21,7 +21,6 @@ export interface CategoryProps {
 
 export type CategoryApi = Omit<CategoryProps, "id">;
 
-// export interface CategoryMutation {
-//   name: string;
-//   type: string;
-// }
+export interface CategoriesList {
+  [id: string]: CategoryApi;
+}

@@ -18,7 +18,7 @@ const Toolbar: React.FC = () => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/add-trns" className="nav-link">
+            <NavLink to="/add-transac" className="nav-link">
               Add
             </NavLink>
           </li>
