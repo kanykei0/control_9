@@ -2,7 +2,7 @@ export interface TransactionProps {
   id: string;
   type: string;
   category: string;
-  amount: number;
+  amount: string;
   createdAt: string;
 }
 
@@ -18,6 +18,7 @@ export interface TransactionConf {
   category: string;
   amount: number;
   createdAt: string;
+  type: string;
 }
 
 export interface TransactionList {

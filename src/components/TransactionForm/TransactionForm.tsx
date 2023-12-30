@@ -57,6 +57,7 @@ const TransactionForm: React.FC<Props> = ({
       category: field.category,
       amount: parseFloat(field.amount),
       createdAt: createdAt,
+      type: field.type,
     });
   };
 

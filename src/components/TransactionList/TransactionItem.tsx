@@ -31,8 +31,6 @@ const TransactionItem: React.FC<Props> = ({
 
     fetchCategory();
   }, [transaction.category]);
-
-  console.log(transaction);
   return (
     <div className="card shadow mx-auto mt-3">
       <div className="card-body d-flex align-items-center">
